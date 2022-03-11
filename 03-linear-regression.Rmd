@@ -159,12 +159,14 @@ For more formula syntax look at `?formula`.
 
 Adding interaction terms are quite easy to do using formula expressions. However, the syntax used to describe them isn't accepted by all engines so we will go over how to include interaction terms using recipes as well.
 
-There are two ways on including an interaction term; `x:y` and `x * y`
+There are two ways on including an interaction term; `x:y` and `x*y`
 
-- `x:y` will include the interaction between `x` and `y`,
-- `x * y` will include the interaction between `x` and `y`, `x`, and `y`, e.i. it is short for `x:y + x + y`.
+- `x*y` will include `x`, `y`, and their interaction
+- `x:y` will include *only* the interaction between `x` and `y`.
 
-with that out of the way let expand `lm_fit2` by adding an interaction term
+Thus, `x*y` is short for `x:y + x + y`.
+
+So let's expand `lm_fit2` by adding an interaction term.
 
 ```{r}
 lm_fit4 <- lm_spec %>%
@@ -173,9 +175,9 @@ lm_fit4 <- lm_spec %>%
 lm_fit4
 ```
 
-note that the interaction term is named `lstat:age`.
+Note that the interaction term is named `lstat:age`.
 
-Sometimes we want to perform transformations, and we want those transformations to be applied, as part of the model fit as a pre-processing step. We will use the recipes package for this task.
+Sometimes we want to perform transformations, and we want those transformations to be applied, as part of the model fit as a pre-processing step. We will use the `recipes` package for this task.
 
 We use the `step_interact()` to specify the interaction term. Next, we create a workflow object to combine the linear regression model specification `lm_spec` with the pre-processing specification `rec_spec_interact` which can then be fitted much like a parsnip model specification.
 
